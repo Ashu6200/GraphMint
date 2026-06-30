@@ -7,11 +7,15 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "prettier --write \"apps/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "prettier --fix \"apps/**/*.{js,jsx,ts,tsx}\"",
+    "lint:check": "prettier --check \"apps/**/*.{js,jsx,ts,tsx}\"",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "packageManager": "pnpm@11.9.0",
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
