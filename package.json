@@ -6,10 +6,10 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "prettier --write \"apps/**/*.{js,jsx,ts,tsx}\"",
-    "lint:fix": "prettier --fix \"apps/**/*.{js,jsx,ts,tsx}\"",
-    "lint:check": "prettier --check \"apps/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "lint:fix": "biome lint --write .",
+    "lint:check": "biome check .",
     "prepare": "husky"
   },
   "keywords": [],
@@ -25,13 +25,8 @@
   },
   "type": "module",
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.5.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import-x": "^4.17.0",
-    "globals": "^17.7.0",
+    "@biomejs/biome": "^1.9.4",
     "husky": "^9.1.7",
-    "prettier": "^3.8.5",
     "turbo": "^2.10.0"
   }
 }
