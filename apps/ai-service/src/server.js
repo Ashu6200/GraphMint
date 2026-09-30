@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import app from './app.js';
 import { createServer } from '@graphmint/service-config';
+import app from './app.js';
 
 createServer(app, 3002);

@@ -1,13 +1,12 @@
 import cors from '@fastify/cors';
+import fastifyEnv from '@fastify/env';
 import helmet from '@fastify/helmet';
 import rateLimit from '@fastify/rate-limit';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
-import fastifyEnv from '@fastify/env';
 
 const BASE_ENV_SCHEMA = {
   PORT: { type: 'string', default: '3000' },
-  HOST: { type: 'string', default: '0.0.0.0' },
   NODE_ENV: { type: 'string', default: 'development' },
   LOG_LEVEL: { type: 'string', default: 'info' },
   CORS_ORIGINS: { type: 'string', default: '' },

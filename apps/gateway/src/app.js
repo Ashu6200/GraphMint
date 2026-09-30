@@ -1,7 +1,7 @@
-import fastify from 'fastify';
 import { randomUUID } from 'node:crypto';
-import { registerPlugins, registerHandlers } from '@graphmint/service-config';
 import proxy from '@fastify/http-proxy';
+import { registerHandlers, registerPlugins } from '@graphmint/service-config';
+import fastify from 'fastify';
 
 const app = fastify({
   logger: {
@@ -31,7 +31,6 @@ await registerPlugins(app, {
   },
 });
 
-// Use gateway-specific handlers (502 instead of 500 for upstream errors)
 registerHandlers(app, { serviceName: 'gateway' });
 
 app.setErrorHandler((error, request, reply) => {
@@ -44,7 +43,6 @@ app.setErrorHandler((error, request, reply) => {
   });
 });
 
-// Proxy routes — prefix stripped before forwarding; x-request-id propagated
 await app.register(proxy, {
   upstream: app.config.CORE_SERVICE_URL,
   prefix: '/core',

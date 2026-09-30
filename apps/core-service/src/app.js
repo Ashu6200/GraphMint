@@ -1,6 +1,6 @@
-import fastify from 'fastify';
 import { randomUUID } from 'node:crypto';
-import { registerPlugins, registerHandlers } from '@graphmint/service-config';
+import { registerHandlers, registerPlugins } from '@graphmint/service-config';
+import fastify from 'fastify';
 
 const app = fastify({
   logger: {
@@ -21,4 +21,17 @@ await registerPlugins(app, {
 
 registerHandlers(app, { serviceName: 'core-service' });
 
+app.get('/health', async () => ({
+  status: 'OK',
+  service: 'core-service',
+  version: process.env.npm_package_version || '1.0.0',
+  uptime: Math.floor(process.uptime()),
+  timestamp: new Date().toISOString(),
+  memory: {
+    heapUsed: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
+    heapTotal: Math.round(process.memoryUsage().heapTotal / 1024 / 1024),
+    rss: Math.round(process.memoryUsage().rss / 1024 / 1024),
+    unit: 'MB',
+  },
+}));
 export default app;
