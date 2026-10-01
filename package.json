@@ -10,7 +10,12 @@
     "format": "biome format --write .",
     "lint:fix": "biome lint --write .",
     "lint:check": "biome check .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "db:generate": "pnpm --filter @repo/database generate",
+    "db:migrate:dev": "pnpm --filter @repo/database migrate:dev",
+    "db:migrate:deploy": "pnpm --filter @repo/database migrate:deploy",
+    "db:push": "pnpm --filter @repo/database db:push",
+    "db:studio": "pnpm --filter @repo/database studio"
   },
   "keywords": [],
   "author": "",

@@ -12,6 +12,7 @@ logs
 
 # generated
 packages/database/src/generated/
+packages/database/generated/
 
 # misc
 .env

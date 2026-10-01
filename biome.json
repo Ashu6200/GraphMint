@@ -36,7 +36,8 @@
       "dist",
       ".next",
       "coverage",
-      "packages/database/src/generated"
+      "packages/database/src/generated",
+      "packages/database/generated"
     ]
   }
 }
