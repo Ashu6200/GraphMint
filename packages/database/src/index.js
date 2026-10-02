@@ -11,8 +11,29 @@ if (fs.existsSync(rootEnv)) {
 }
 dotenv.config();
 
+export function getDirectConnectionString(rawUrl = process.env.DATABASE_URL) {
+  if (!rawUrl) return rawUrl;
+
+  if (rawUrl.startsWith('prisma+postgres://')) {
+    try {
+      const parsed = new URL(rawUrl);
+      const apiKey = parsed.searchParams.get('api_key');
+      if (apiKey) {
+        const decoded = JSON.parse(Buffer.from(apiKey, 'base64').toString('utf8'));
+        if (decoded.databaseUrl) {
+          return decoded.databaseUrl;
+        }
+      }
+    } catch {
+      // Fallback to rawUrl if parsing fails
+    }
+  }
+
+  return rawUrl;
+}
+
 export function createPrismaClient() {
-  const connectionString = process.env.DATABASE_URL;
+  const connectionString = getDirectConnectionString(process.env.DATABASE_URL);
   const pool = new pg.Pool({ connectionString });
   const adapter = new PrismaPg(pool);
 

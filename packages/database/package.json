@@ -11,6 +11,8 @@
     }
   },
   "scripts": {
+    "dev": "prisma dev",
+    "db:wait": "node src/check-db.js",
     "build": "prisma generate",
     "generate": "prisma generate",
     "db:generate": "prisma generate",
