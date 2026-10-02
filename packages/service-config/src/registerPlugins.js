@@ -6,7 +6,7 @@ import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 
 const BASE_ENV_SCHEMA = {
-  PORT: { type: 'string', default: '3000' },
+  PORT: { type: 'string' },
   NODE_ENV: { type: 'string', default: 'development' },
   LOG_LEVEL: { type: 'string', default: 'info' },
   CORS_ORIGINS: { type: 'string', default: '' },
@@ -32,7 +32,7 @@ export async function registerPlugins(
   await app.register(fastifyEnv, {
     schema: {
       type: 'object',
-      required: ['PORT', 'NODE_ENV'],
+      required: ['NODE_ENV'],
       properties: { ...BASE_ENV_SCHEMA, ...extraEnvSchema },
     },
   });

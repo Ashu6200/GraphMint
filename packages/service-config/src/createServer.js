@@ -1,8 +1,11 @@
 const SHUTDOWN_TIMEOUT_MS = 5000;
 
-export function createServer(app, defaultPort) {
+export function createServer(app, defaultPort, portEnvKey) {
   const start = async () => {
-    const port = Number(process.env.PORT) || defaultPort;
+    const port =
+      Number(portEnvKey ? process.env[portEnvKey] : null) ||
+      Number(process.env.PORT) ||
+      defaultPort;
 
     try {
       await app.listen({ port });
