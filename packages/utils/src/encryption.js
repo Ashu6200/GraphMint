@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 function get({ secretKey }) {
     const ALGO = 'aes-256-gcm';

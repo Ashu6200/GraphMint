@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import pg from 'pg';
 import { Prisma, PrismaClient } from '../generated/prisma/client.ts';
 
-// Load environment variables (check root .env first, then fallback)
 const rootEnv = path.resolve(import.meta.dirname, '../../../.env');
 if (fs.existsSync(rootEnv)) {
   dotenv.config({ path: rootEnv });
