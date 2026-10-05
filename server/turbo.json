@@ -1,0 +1,41 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [".env"],
+  "globalEnv": [
+    "DATABASE_URL",
+    "NODE_ENV",
+    "LOG_LEVEL",
+    "GATEWAY_PORT",
+    "CORE_SERVICE_PORT",
+    "AI_SERVICE_PORT",
+    "IMPORT_EXPORT_SERVICE_PORT",
+    "PLATFORM_SERVICE_PORT",
+    "CORE_SERVICE_URL",
+    "AI_SERVICE_URL",
+    "IMPORT_EXPORT_SERVICE_URL",
+    "PLATFORM_SERVICE_URL",
+    "CORS_ORIGINS"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build", "^db:generate"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**"]
+    },
+    "@graphmint/database#build": {
+      "cache": false
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "db:generate": {
+      "cache": false
+    },
+    "db:migrate": {
+      "cache": false
+    },
+    "db:deploy": {
+      "cache": false
+    }
+  }
+}

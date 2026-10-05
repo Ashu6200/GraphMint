@@ -1,0 +1,22 @@
+{
+  "name": "platform-service",
+  "version": "1.0.0",
+  "description": "Platform service for GraphMint",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "@graphmint/cache": "workspace:*",
+    "@graphmint/database": "workspace:*",
+    "@graphmint/service-config": "workspace:*",
+    "@graphmint/utils": "workspace:*",
+    "dotenv": "^17.4.2",
+    "fastify": "^5.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

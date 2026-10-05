@@ -1,0 +1,43 @@
+{
+  "name": "@graphmint/database",
+  "version": "1.0.0",
+  "description": "Centralized Prisma database package for GraphMint",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "prisma dev",
+    "db:wait": "node src/check-db.js",
+    "build": "prisma generate",
+    "generate": "prisma generate",
+    "db:generate": "prisma generate",
+    "migrate": "prisma migrate dev",
+    "migrate:dev": "prisma migrate dev",
+    "db:migrate": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "db:deploy": "prisma migrate deploy",
+    "push": "prisma db push",
+    "db:push": "prisma db push",
+    "studio": "prisma studio",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "catalog:prisma",
+    "dotenv": "^17.4.2",
+    "fastify-plugin": "^6.0.0",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "prisma": "catalog:prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
