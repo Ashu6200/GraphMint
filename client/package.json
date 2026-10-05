@@ -1,0 +1,23 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "GraphMint Client Monorepo",
+  "main": "index.js",
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:desktop": "turbo dev --filter=desktop",
+    "dev:web": "turbo dev --filter=web",
+    "build": "turbo build",
+    "build:desktop": "turbo build --filter=desktop",
+    "build:web": "turbo build --filter=web",
+    "clean": "turbo clean"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@12.9.1",
+  "type": "module",
+  "devDependencies": {
+    "turbo": "^2.4.4"
+  }
+}

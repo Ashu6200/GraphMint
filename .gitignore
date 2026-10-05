@@ -1,0 +1,32 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Turborepo
+.turbo
+
+# Next.js
+.next
+out
+
+# Build outputs
+dist
+dist-electron
+build
+release
+
+# Environment variables
+.env
+.env*.local
+.env.uat
+.env.beta
+
+# Logs
+logs
+*.log
+
+# Editor and OS
+.DS_Store
+Thumbs.db
+.vscode
+.idea
