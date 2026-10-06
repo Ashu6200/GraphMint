@@ -1,10 +1,12 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider        = "prisma-client-js"
+  output          = "../generated/prisma"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
+  provider   = "postgresql"
+  extensions = [pgvector(map: "vector")]
 }
 
 // ==========================================
@@ -128,6 +130,7 @@ model Organization {
   subscription Subscription?
   chatRooms    ChatRoom[]
   auditLogs    AuditLog[]
+  embeddings   VectorEmbedding[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -196,6 +199,7 @@ model Project {
   chatRooms  ChatRoom[]
   aiSessions AISession[]
   auditLogs  AuditLog[]
+  embeddings VectorEmbedding[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -266,6 +270,7 @@ model Diagram {
   chatMessages     ChatMessage[]
   aiSessions       AISession[]
   changeSets       ChangeSet[]
+  embeddings       VectorEmbedding[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -447,6 +452,8 @@ model ChatMessage {
   isEdited  Boolean @default(false)
   isDeleted Boolean @default(false)
 
+  embeddings VectorEmbedding[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -491,6 +498,7 @@ model AISession {
   aiModel        String?  // Active model (e.g. "gemini-3.7-flash", "gemini-1.5-pro")
 
   messages    AIMessage[]
+  embeddings  VectorEmbedding[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -751,4 +759,61 @@ model AuditLog {
 
   @@index([organizationId, createdAt])
   @@map("audit_log")
+}
+
+// ==========================================
+// 10. pgvector & Semantic RAG Embedding Engine
+// ==========================================
+
+enum EmbeddingEntityType {
+  ORGANIZATION_DOC // High-level Organization documentation & knowledge base
+  PROJECT_DOC      // Workspace / Project specific architectural guides
+  DIAGRAM_SUMMARY  // Diagram architectural snapshot & high-level purpose
+  TABLE_SCHEMA     // Individual table schema definition, indexes & purpose
+  COLUMN_SCHEMA    // Individual column metadata, constraints & data dictionary
+  AI_CHAT_MEMORY   // RAG embedding for long-term AI session history & contextual recall
+  CANVAS_COMMENT   // Canvas comment thread content for semantic search
+}
+
+model VectorEmbedding {
+  id String @id @default(cuid())
+
+  // Multi-Tenancy Hierarchy Scoping (Enforces strict tenant isolation)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  diagramId String?
+  diagram   Diagram? @relation(fields: [diagramId], references: [id], onDelete: Cascade)
+
+  aiSessionId String?
+  aiSession   AISession? @relation(fields: [aiSessionId], references: [id], onDelete: Cascade)
+
+  chatMessageId String?
+  chatMessage   ChatMessage? @relation(fields: [chatMessageId], references: [id], onDelete: Cascade)
+
+  // Entity Target & Mapping
+  entityType EmbeddingEntityType
+  entityId   String? // ID of the referenced target entity (e.g. tableId, columnId, docId)
+
+  // Raw Content & Context Metadata
+  content    String // Text snippet / document converted to vector embedding
+  title      String? // Title or section header
+  metadata   Json? // Extra metadata (e.g. { tableName: "users", dbType: "POSTGRESQL" })
+  dimensions Int    @default(1536) // Vector dimension size (e.g. 1536 for OpenAI / 768 for Gemini)
+
+  // PostgreSQL pgvector Native Column
+  // Stored as Unsupported("vector(1536)") in Prisma schema for native Postgres vector ops
+  embedding Unsupported("vector(1536)")?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([diagramId])
+  @@index([organizationId, entityType])
+  @@map("vector_embedding")
 }
