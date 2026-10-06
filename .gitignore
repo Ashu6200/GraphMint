@@ -14,6 +14,7 @@ dist
 dist-electron
 build
 release
+resource
 
 # Environment variables
 .env
